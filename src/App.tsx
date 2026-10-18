@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
-import { branches, products, type Branch, type Category } from './data'
+import { branches, type Branch } from './branches'
+import { products, type Category } from './data'
 
 const categoryLabels: Record<Category, string> = {
   coffee: 'قهوة',
@@ -71,9 +72,15 @@ function BranchesPage() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords
-        const best = branches.reduce((a, b) =>
-          distanceKm(latitude, longitude, a.lat, a.lng) <=
-          distanceKm(latitude, longitude, b.lat, b.lng)
+        // Only branches with known coordinates can be ranked by distance.
+        const located = branches.filter((b) => b.lat !== null && b.lng !== null)
+        if (located.length === 0) {
+          setStatus('إحداثيات الفروع لسه مش متضافة')
+          return
+        }
+        const best = located.reduce((a, b) =>
+          distanceKm(latitude, longitude, a.lat!, a.lng!) <=
+          distanceKm(latitude, longitude, b.lat!, b.lng!)
             ? a
             : b,
         )
@@ -107,7 +114,7 @@ function BranchesPage() {
             <p className="font-semibold">{b.name}</p>
             <p className="text-sm text-slate-600">{b.address}</p>
             <a
-              href={`https://www.google.com/maps/search/?api=1&query=${b.lat},${b.lng}`}
+              href={b.mapsUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-2 inline-block text-sm font-semibold text-otr-blue underline"
