@@ -74,7 +74,9 @@ export function BottomNav({ locale, labels }: { locale: string; labels: NavLabel
 export function Hero({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
     <header className="rounded-b-[2rem] bg-brand px-5 pb-8 pt-6 text-white">
-      <Image src="/brand/on-the-run-logo.png" alt="On the Run" width={253} height={133} className="mb-3 h-10 w-auto" />
+      <span className="mb-3 inline-block rounded-2xl bg-white px-3 py-2">
+        <Image src="/brand/on-the-run-logo-blue.png" alt="On the Run" width={608} height={256} className="h-8 w-auto" />
+      </span>
       <h1 className="text-2xl font-extrabold tracking-tight">{title}</h1>
       {children && <div className="mt-4">{children}</div>}
     </header>
