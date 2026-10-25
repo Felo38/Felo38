@@ -2,13 +2,55 @@
   "common": {
     "appName": "On the Run",
     "signOut": "Sign out",
-    "home": "Home"
+    "home": "Home",
+    "currency": "EGP",
+    "directions": "Get directions",
+    "call": "Call branch"
   },
   "home": {
     "title": "Welcome to On the Run",
-    "subtitle": "Menu, ordering and points are coming in the next phases.",
+    "subtitle": "The menu and branch locations are live. Ordering and points come in the next phases.",
+    "menu": "Menu",
+    "branches": "Branches",
     "customerLogin": "Customer sign in",
     "staffLogin": "Branch & admin sign in"
+  },
+  "menu": {
+    "title": "Menu",
+    "branchLabel": "Choose a branch",
+    "search": "Search for an item",
+    "searchButton": "Search",
+    "clearSearch": "Clear search",
+    "available": "Available",
+    "unavailable": "Not available",
+    "noItems": "No items in this category",
+    "noResults": "No results found",
+    "searchResults": "Search results",
+    "noBranches": "No branches available right now",
+    "branchUnavailableNote": "Items not sold at this branch show as \"Not available\""
+  },
+  "branches": {
+    "title": "Branches",
+    "defaultBranch": "My default branch",
+    "setDefault": "Set as my default",
+    "default": "Default",
+    "hours": "Opening hours",
+    "noHours": "Hours coming soon",
+    "noCoordinates": "Map location coming soon",
+    "mapTitle": "Branch location on the map",
+    "savedDefault": "Default branch saved",
+    "errors": {
+      "branch": "This branch is not available right now"
+    }
+  },
+  "staff": {
+    "title": "Branch & admin sign in",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "errors": {
+      "invalid": "Invalid credentials"
+    }
   },
   "login": {
     "title": "Sign in with your phone",
@@ -26,18 +68,71 @@
       "code": "Wrong or expired code"
     }
   },
-  "staff": {
-    "title": "Branch & admin sign in",
-    "email": "Email",
-    "password": "Password",
-    "signIn": "Sign in",
-    "errors": {
-      "invalid": "Invalid credentials"
-    }
-  },
   "admin": {
     "title": "Admin panel",
-    "comingSoon": "Being built in phase 2"
+    "nav": {
+      "products": "Products",
+      "branches": "Branches",
+      "availability": "Availability"
+    },
+    "saved": "Saved",
+    "errors": {
+      "invalid": "Some fields are missing or invalid",
+      "save": "Could not save, try again",
+      "coords": "Enter latitude and longitude together, or leave both empty"
+    },
+    "products": {
+      "title": "Products",
+      "add": "New product",
+      "edit": "Edit",
+      "formTitle": "Product details",
+      "formNew": "New product",
+      "category": "Category",
+      "slug": "Slug (lowercase, no spaces)",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "descAr": "Description (Arabic)",
+      "descEn": "Description (English)",
+      "price": "Price (EGP)",
+      "type": "Points type",
+      "sortOrder": "Sort order",
+      "active": "Visible to customers",
+      "save": "Save",
+      "types": {
+        "coffee": "Coffee",
+        "food": "Food",
+        "other": "Other (no points)"
+      },
+      "status": "Status"
+    },
+    "branches": {
+      "title": "Branches",
+      "add": "New branch",
+      "edit": "Edit",
+      "formTitle": "Branch details",
+      "formNew": "New branch",
+      "slug": "Slug (lowercase, no spaces)",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "addressAr": "Address (Arabic)",
+      "addressEn": "Address (English)",
+      "mapsUrl": "Google Maps link",
+      "phone": "Phone",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "hours": "Opening hours (free text)",
+      "prep": "Prep time (minutes)",
+      "accepting": "Accepting orders",
+      "active": "Visible to customers",
+      "save": "Save",
+      "status": "Status"
+    },
+    "availability": {
+      "title": "Product availability by branch",
+      "help": "Tick the products each branch sells. Leave the rest empty.",
+      "save": "Save availability",
+      "product": "Product"
+    }
   },
   "branch": {
     "title": "Branch dashboard",
