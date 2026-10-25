@@ -5,6 +5,8 @@ import { BottomNav, Hero } from '@/components/customer-shell'
 import { BRANCH_COOKIE } from '@/lib/branch-cookie'
 import { listBranchProducts, listBranches, listCategories, listProducts } from '@/lib/catalog/queries'
 import { getNavLabels } from '@/lib/customer/nav'
+import { AddToCartButton } from '@/components/customer/add-to-cart'
+import { pick } from '@/lib/i18n/pick'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -42,6 +44,7 @@ export default async function MenuPage({ params, searchParams }: Props) {
   })
   const branchParam = selected ? `branch=${selected.slug}` : ''
   const navLabels = await getNavLabels()
+  const cartLabels = pick((k) => t(k), ['addToCart', 'switchBranch'])
 
   return (
     <>
@@ -119,9 +122,20 @@ export default async function MenuPage({ params, searchParams }: Props) {
                     {isAvailable ? t('available') : t('unavailable')}
                   </span>
                 </div>
-                <p className="shrink-0 rounded-full bg-brand px-3 py-1.5 text-sm font-extrabold text-white">
-                  {p.price_egp} {tc('currency')}
-                </p>
+                <div className="flex shrink-0 flex-col items-end gap-2">
+                  <p className="rounded-full bg-brand px-3 py-1.5 text-sm font-extrabold text-white">
+                    {p.price_egp} {tc('currency')}
+                  </p>
+                  {selected && isAvailable && (
+                    <AddToCartButton
+                      productId={p.id}
+                      branchSlug={selected.slug}
+                      label={cartLabels.addToCart}
+                      switchBranchMessage={cartLabels.switchBranch}
+                      itemName={isAr ? p.name_ar : p.name_en}
+                    />
+                  )}
+                </div>
               </li>
             )
           })}

@@ -7,7 +7,7 @@ export async function getNavLabels(): Promise<NavLabels> {
     home: t('home'),
     menu: t('menu'),
     branches: t('branches'),
-    points: t('points'),
-    account: t('account'),
+    cart: t('cart'),
+    orders: t('orders'),
   }
 }

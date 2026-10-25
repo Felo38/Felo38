@@ -3,12 +3,12 @@ import { requestOtpAction, verifyOtpAction } from '@/lib/auth/actions'
 
 type Props = {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ phone?: string; error?: string }>
+  searchParams: Promise<{ phone?: string; error?: string; next?: string }>
 }
 
 export default async function LoginPage({ params, searchParams }: Props) {
   const { locale } = await params
-  const { phone, error } = await searchParams
+  const { phone, error, next } = await searchParams
   setRequestLocale(locale)
   const t = await getTranslations('login')
 
@@ -28,6 +28,7 @@ export default async function LoginPage({ params, searchParams }: Props) {
         <form action={verifyOtpAction} className="flex flex-col gap-4">
           <input type="hidden" name="locale" value={locale} />
           <input type="hidden" name="phone" value={phone} />
+          <input type="hidden" name="next" value={next ?? ''} />
           <p className="text-sm text-slate-600">{t('codeSentTo', { phone })}</p>
           <label className="flex flex-col gap-1 text-sm font-medium">
             {t('codeLabel')}
@@ -51,6 +52,7 @@ export default async function LoginPage({ params, searchParams }: Props) {
       ) : (
         <form action={requestOtpAction} className="flex flex-col gap-4">
           <input type="hidden" name="locale" value={locale} />
+          <input type="hidden" name="next" value={next ?? ''} />
           <label className="flex flex-col gap-1 text-sm font-medium">
             {t('phoneLabel')}
             <input

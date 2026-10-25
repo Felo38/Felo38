@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-export type NavLabels = { home: string; menu: string; branches: string; points: string; account: string }
+export type NavLabels = { home: string; menu: string; branches: string; cart: string; orders: string }
 
 // Icons are inline SVG so no icon package is needed.
 const icons = {
@@ -12,7 +12,8 @@ const icons = {
   menu: 'M4 6h16M4 12h16M4 18h10',
   branches: 'M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
   points: 'M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7z',
-  account: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0',
+  cart: 'M3 4h2l2.4 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H7M9 20.5a.5.5 0 1 0 0-.01M17 20.5a.5.5 0 1 0 0-.01',
+  orders: 'M9 4h6l1 2h3v14H5V6h3zM9 12h6M9 16h4',
 } as const
 
 export function BottomNav({ locale, labels }: { locale: string; labels: NavLabels }) {
@@ -21,8 +22,8 @@ export function BottomNav({ locale, labels }: { locale: string; labels: NavLabel
     { key: 'menu', href: `/${locale}/menu`, label: labels.menu, icon: icons.menu },
     { key: 'branches', href: `/${locale}/branches`, label: labels.branches, icon: icons.branches },
     { key: 'home', href: `/${locale}`, label: labels.home, icon: icons.home, center: true },
-    { key: 'points', href: `/${locale}/login`, label: labels.points, icon: icons.points },
-    { key: 'account', href: `/${locale}/login`, label: labels.account, icon: icons.account },
+    { key: 'cart', href: `/${locale}/cart`, label: labels.cart, icon: icons.cart },
+    { key: 'orders', href: `/${locale}/orders`, label: labels.orders, icon: icons.orders },
   ]
 
   return (

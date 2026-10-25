@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
+import { safeNext } from '@/lib/errors'
 import { normalizeEgyptPhone } from './phone'
 
 const localeSchema = z.enum(['ar', 'en']).catch('ar')
@@ -17,7 +18,8 @@ export async function requestOtpAction(formData: FormData) {
   const { error } = await supabase.auth.signInWithOtp({ phone })
   if (error) redirect(`/${locale}/login?error=send`)
 
-  redirect(`/${locale}/login?phone=${encodeURIComponent(phone)}`)
+  const next = encodeURIComponent(safeNext(formData.get('next'), ''))
+  redirect(`/${locale}/login?phone=${encodeURIComponent(phone)}${next ? `&next=${next}` : ''}`)
 }
 
 // Step 2 of customer login: verify the code and start a session.
@@ -32,7 +34,7 @@ export async function verifyOtpAction(formData: FormData) {
   const { error } = await supabase.auth.verifyOtp({ phone, token, type: 'sms' })
   if (error) redirect(`/${locale}/login?phone=${encodeURIComponent(phone)}&error=code`)
 
-  redirect(`/${locale}`)
+  redirect(safeNext(formData.get('next'), `/${locale}`))
 }
 
 // Branch staff and admins sign in with email and password.

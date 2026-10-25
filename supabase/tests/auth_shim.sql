@@ -28,3 +28,7 @@ $$;
 
 do $$ begin create role anon nologin; exception when duplicate_object then null; end $$;
 do $$ begin create role authenticated nologin; exception when duplicate_object then null; end $$;
+
+-- Supabase grants these by default. Without it, auth.uid() fails for signed-in roles.
+grant usage on schema auth to anon, authenticated;
+grant execute on function auth.uid() to anon, authenticated;

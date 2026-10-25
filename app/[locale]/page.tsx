@@ -5,6 +5,8 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { BottomNav, Hero } from '@/components/customer-shell'
 import { BRANCH_COOKIE } from '@/lib/branch-cookie'
 import { listBranches } from '@/lib/catalog/queries'
+import { getCurrentProfile } from '@/lib/auth/session'
+import { getBalance } from '@/lib/loyalty/queries'
 import { getNavLabels } from '@/lib/customer/nav'
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -17,6 +19,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const branches = await listBranches()
   const savedSlug = (await cookies()).get(BRANCH_COOKIE)?.value
   const store = branches.find((b) => b.slug === savedSlug) ?? branches[0]
+  const profile = await getCurrentProfile()
+  const balance = profile ? await getBalance() : null
   const navLabels = await getNavLabels()
 
   return (
@@ -25,8 +29,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="flex gap-3">
           <div className="flex-1 rounded-2xl bg-white/10 p-4">
             <p className="text-xs text-white/70">{t('points')}</p>
-            <p className="mt-1 text-2xl font-extrabold">—</p>
-            <p className="text-xs text-white/70">{t('pointsHint')}</p>
+            <p className="mt-1 text-2xl font-extrabold">{balance ?? '—'}</p>
+            <p className="text-xs text-white/70">{profile ? t('pointsSigned') : t('pointsHint')}</p>
           </div>
           <div className="flex-1 rounded-2xl bg-white/10 p-4">
             <p className="text-xs text-white/70">{t('rewards')}</p>
