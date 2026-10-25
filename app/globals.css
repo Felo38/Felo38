@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  /* Placeholder palette sampled from the reference screens. Replace with the real brand colors. */
+  /* Brand palette. Accents are sampled from the On the Run logo. */
   --color-brand: #1d4a9b;
   --color-brand-dark: #163a7d;
-  --color-brand-accent: #f7c443;
-  --color-brand-red: #d8262e;
+  --color-brand-accent: #f8b800;
+  --color-brand-red: #e8101c;
+  --color-brand-blue: #2090f8;
   --font-sans: var(--font-poppins), var(--font-cairo), system-ui, sans-serif;
 }
 

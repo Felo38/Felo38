@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
@@ -49,10 +50,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </section>
         )}
 
-        <section className="overflow-hidden rounded-3xl bg-brand-accent p-6 text-center shadow-sm">
-          <p className="text-2xl font-extrabold italic text-brand">On the Run</p>
-          <p className="mt-1 text-sm font-extrabold uppercase tracking-widest text-brand-red">Rewards</p>
-          <p className="mt-3 text-sm font-semibold text-brand/90">{t('rewardsBanner')}</p>
+        <section className="overflow-hidden rounded-3xl bg-white p-6 text-center shadow-sm">
+          <Image src="/brand/on-the-run-logo.png" alt="On the Run" width={253} height={133} className="mx-auto h-20 w-auto" />
+          <p className="mt-2 text-sm font-extrabold uppercase tracking-widest text-brand-red">Rewards</p>
+          <p className="mt-2 text-sm font-semibold text-slate-600">{t('rewardsBanner')}</p>
         </section>
 
         <section className="grid grid-cols-2 gap-3">

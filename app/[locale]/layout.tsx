@@ -17,6 +17,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'On the Run',
   description: 'On the Run: قهوة وأكل وسناكس',
+  icons: { icon: '/brand/on-the-run-logo.png' },
 }
 
 export function generateStaticParams() {

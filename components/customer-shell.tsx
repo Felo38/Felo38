@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -73,6 +74,7 @@ export function BottomNav({ locale, labels }: { locale: string; labels: NavLabel
 export function Hero({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
     <header className="rounded-b-[2rem] bg-brand px-5 pb-8 pt-6 text-white">
+      <Image src="/brand/on-the-run-logo.png" alt="On the Run" width={253} height={133} className="mb-3 h-10 w-auto" />
       <h1 className="text-2xl font-extrabold tracking-tight">{title}</h1>
       {children && <div className="mt-4">{children}</div>}
     </header>
