@@ -14,7 +14,9 @@ values
   ('otr-maadi-towers', 'Maadi Towers', 'Maadi Towers', 'شارع حلوان الزراعى - ابراج عثمان - المعادى',
    'Masr - Helwan Agriculture Rd, Maadi Al Khabiri Al Wasti, Maadi, Cairo Governorate 4211212',
    'https://maps.app.goo.gl/J4qaAZ5gSvAqUeRT6', 20),
-  ('otr-dokki', 'Dokki', 'Dokki', 'الدقي', null, null, 15)
+  ('otr-dokki', 'Dokki', 'Dokki', '50 ش مراد - امام مجلس الدولة - الدقي',
+   '50 Mourad St El Dokki Giza EG-GZ EG 12611, 50 Mourad, Oula, Al Giza',
+   'https://maps.app.goo.gl/n5vB5MvLiEdn9J359', 15)
 on conflict (slug) do nothing;
 
 -- Categories (placeholder names, replace from the admin panel later)
