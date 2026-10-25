@@ -5,7 +5,8 @@
     "home": "Home",
     "currency": "EGP",
     "directions": "Get directions",
-    "call": "Call branch"
+    "call": "Call branch",
+    "storeInfo": "Store info"
   },
   "home": {
     "title": "Welcome to On the Run",
@@ -13,7 +14,13 @@
     "menu": "Menu",
     "branches": "Branches",
     "customerLogin": "Customer sign in",
-    "staffLogin": "Branch & admin sign in"
+    "staffLogin": "Branch & admin sign in",
+    "points": "Your points",
+    "pointsHint": "Sign in to see your points",
+    "rewards": "Rewards",
+    "rewardsHint": "Coming soon",
+    "yourStore": "Your store",
+    "rewardsBanner": "Earn points on every purchase and redeem them for discounts"
   },
   "menu": {
     "title": "Menu",
@@ -27,7 +34,8 @@
     "noResults": "No results found",
     "searchResults": "Search results",
     "noBranches": "No branches available right now",
-    "branchUnavailableNote": "Items not sold at this branch show as \"Not available\""
+    "branchUnavailableNote": "Items not sold at this branch show as \"Not available\"",
+    "change": "Change"
   },
   "branches": {
     "title": "Branches",
@@ -41,7 +49,8 @@
     "savedDefault": "Default branch saved",
     "errors": {
       "branch": "This branch is not available right now"
-    }
+    },
+    "showOnMap": "Show on map"
   },
   "staff": {
     "title": "Branch & admin sign in",
@@ -137,5 +146,12 @@
   "branch": {
     "title": "Branch dashboard",
     "comingSoon": "Being built in phase 4"
+  },
+  "nav": {
+    "home": "Home",
+    "menu": "Menu",
+    "branches": "Branches",
+    "points": "Points",
+    "account": "Account"
   }
 }

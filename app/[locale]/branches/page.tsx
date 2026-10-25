@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { SiteHeader } from '@/components/site-header'
+import { BottomNav, Hero } from '@/components/customer-shell'
 import { BRANCH_COOKIE } from '@/lib/branch-cookie'
-import { setDefaultBranchAction } from '@/lib/branch-preference'
 import { listBranches } from '@/lib/catalog/queries'
+import { setDefaultBranchAction } from '@/lib/branch-preference'
+import { getNavLabels } from '@/lib/customer/nav'
 import type { Branch } from '@/lib/catalog/types'
 
 type Props = {
@@ -38,37 +39,37 @@ export default async function BranchesPage({ params, searchParams }: Props) {
   const branches = await listBranches()
   const savedSlug = (await cookies()).get(BRANCH_COOKIE)?.value
   const focused = branches.find((b) => b.slug === branch) ?? branches.find((b) => b.slug === savedSlug)
+  const navLabels = await getNavLabels()
 
   return (
     <>
-      <SiteHeader locale={locale} />
-      <main className="mx-auto max-w-3xl space-y-5 px-4 py-6">
-        <h1 className="text-2xl font-extrabold text-brand">{t('title')}</h1>
+      <Hero title={t('title')} />
 
+      <main className="mx-auto max-w-md space-y-5 px-5 pb-28 pt-5">
         {saved && (
-          <p role="status" className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700">
+          <p role="status" className="rounded-2xl bg-emerald-50 p-3 text-sm font-semibold text-emerald-700">
             {t('savedDefault')}
           </p>
         )}
         {error && (
-          <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
+          <p role="alert" className="rounded-2xl bg-red-50 p-3 text-sm font-semibold text-red-700">
             {t('errors.branch')}
           </p>
         )}
 
         {focused && focused.lat !== null && focused.lng !== null ? (
-          <section aria-label={t('mapTitle')} className="overflow-hidden rounded-2xl border border-slate-200">
+          <section aria-label={t('mapTitle')} className="overflow-hidden rounded-3xl bg-white shadow-sm">
             <iframe
               title={t('mapTitle')}
               src={mapEmbedUrl(focused.lat, focused.lng)}
-              className="h-64 w-full"
+              className="h-56 w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </section>
         ) : (
           focused && (
-            <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-600">{t('noCoordinates')}</p>
+            <p className="rounded-2xl bg-white p-4 text-sm text-slate-500 shadow-sm">{t('noCoordinates')}</p>
           )
         )}
 
@@ -79,61 +80,55 @@ export default async function BranchesPage({ params, searchParams }: Props) {
             const isDefault = b.slug === savedSlug
             const directions = directionsUrl(b)
             const hours = b.working_hours?.text
+            const isFocused = b.slug === focused?.slug
             return (
               <li
                 key={b.id}
                 id={b.slug}
-                className={`space-y-3 rounded-2xl border p-4 ${
-                  b.slug === focused?.slug ? 'border-brand' : 'border-slate-200'
-                }`}
+                className={`space-y-3 rounded-3xl bg-white p-5 shadow-sm ${isFocused ? 'ring-2 ring-brand' : ''}`}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h2 className="text-lg font-bold text-brand">{name}</h2>
+                  <h2 className="text-lg font-extrabold text-brand">{name}</h2>
                   {isDefault && (
-                    <span className="shrink-0 rounded-full bg-brand-accent px-2 py-0.5 text-xs font-bold text-brand">
+                    <span className="shrink-0 rounded-full bg-brand-accent px-2.5 py-1 text-xs font-extrabold text-brand">
                       {t('default')}
                     </span>
                   )}
                 </div>
                 <p className="text-sm text-slate-700">{address}</p>
-                <div className="text-sm text-slate-600">
-                  <p>
-                    <span className="font-semibold">{t('hours')}: </span>
-                    {hours || t('noHours')}
+                <p className="text-sm text-slate-500">
+                  <span className="font-semibold text-slate-700">{t('hours')}: </span>
+                  {hours || t('noHours')}
+                </p>
+                {b.phone && (
+                  <p dir="ltr" className="text-start text-sm">
+                    <a href={`tel:${b.phone}`} className="font-semibold text-brand underline">
+                      {b.phone}
+                    </a>
                   </p>
-                  {b.phone && (
-                    <p dir="ltr" className="text-start">
-                      <a href={`tel:${b.phone}`} className="underline">
-                        {b.phone}
-                      </a>
-                    </p>
-                  )}
-                </div>
+                )}
                 <div className="flex flex-wrap gap-2 pt-1">
                   {directions && (
                     <a
                       href={directions}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-brand"
+                      className="rounded-full bg-brand px-4 py-2 text-sm font-bold text-white"
                     >
                       {tc('directions')}
                     </a>
                   )}
                   <Link
                     href={`/${locale}/branches?branch=${b.slug}`}
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-brand"
+                    className="rounded-full border border-brand px-4 py-2 text-sm font-bold text-brand"
                   >
-                    {isAr ? 'اعرض على الخريطة' : 'Show on map'}
+                    {t('showOnMap')}
                   </Link>
                   {!isDefault && (
                     <form action={setDefaultBranchAction}>
                       <input type="hidden" name="locale" value={locale} />
                       <input type="hidden" name="slug" value={b.slug} />
-                      <button
-                        type="submit"
-                        className="rounded-lg bg-brand px-3 py-2 text-sm font-semibold text-white"
-                      >
+                      <button type="submit" className="rounded-full bg-brand-accent px-4 py-2 text-sm font-bold text-brand">
                         {t('setDefault')}
                       </button>
                     </form>
@@ -144,6 +139,8 @@ export default async function BranchesPage({ params, searchParams }: Props) {
           })}
         </ul>
       </main>
+
+      <BottomNav locale={locale} labels={navLabels} />
     </>
   )
 }
