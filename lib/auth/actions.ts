@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { safeNext } from '@/lib/errors'
+import { siteOrigin } from './site'
 import { normalizeEgyptPhone } from './phone'
 
 const localeSchema = z.enum(['ar', 'en']).catch('ar')
@@ -66,4 +67,58 @@ export async function signOutAction(formData: FormData) {
   const supabase = await createClient()
   await supabase.auth.signOut()
   redirect(`/${locale}`)
+}
+
+// Google sign-in. The browser goes to Google, then comes back to /auth/callback.
+export async function googleSignInAction(formData: FormData) {
+  const locale = localeSchema.parse(formData.get('locale'))
+  const next = safeNext(formData.get('next'), `/${locale}`)
+  const origin = await siteOrigin()
+
+  const supabase = await createClient()
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: `${origin}/${locale}/auth/callback?next=${encodeURIComponent(next)}` },
+  })
+  if (error || !data.url) redirect(`/${locale}/login?error=google`)
+  redirect(data.url)
+}
+
+// Signed-in user without a phone: send an SMS code to verify the number.
+export async function requestPhoneAction(formData: FormData) {
+  const locale = localeSchema.parse(formData.get('locale'))
+  const phone = normalizeEgyptPhone(String(formData.get('phone') ?? ''))
+  if (!phone) redirect(`/${locale}/account?error=phone`)
+
+  const supabase = await createClient()
+  const { error } = await supabase.auth.updateUser({ phone })
+  if (error) redirect(`/${locale}/account?error=send`)
+  redirect(`/${locale}/account?phone=${encodeURIComponent(phone)}`)
+}
+
+// Checks the code. On success Auth saves the phone, and the database copies it to the profile.
+export async function verifyPhoneAction(formData: FormData) {
+  const locale = localeSchema.parse(formData.get('locale'))
+  const phone = normalizeEgyptPhone(String(formData.get('phone') ?? ''))
+  const token = String(formData.get('token') ?? '').trim()
+  if (!phone) redirect(`/${locale}/account?error=phone`)
+  if (!/^\d{6}$/.test(token)) redirect(`/${locale}/account?phone=${encodeURIComponent(phone)}&error=code`)
+
+  const supabase = await createClient()
+  const { error } = await supabase.auth.verifyOtp({ phone, token, type: 'phone_change' })
+  if (error) redirect(`/${locale}/account?phone=${encodeURIComponent(phone)}&error=code`)
+  redirect(`/${locale}/account?verified=1`)
+}
+
+// Phone-first user adds Google to the same account.
+export async function linkGoogleAction(formData: FormData) {
+  const locale = localeSchema.parse(formData.get('locale'))
+  const origin = await siteOrigin()
+  const supabase = await createClient()
+  const { data, error } = await supabase.auth.linkIdentity({
+    provider: 'google',
+    options: { redirectTo: `${origin}/${locale}/auth/callback?next=${encodeURIComponent(`/${locale}/account`)}` },
+  })
+  if (error || !data.url) redirect(`/${locale}/account?error=link`)
+  redirect(data.url)
 }

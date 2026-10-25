@@ -26,5 +26,8 @@ echo "==> Seed"
 echo "==> RLS and ledger tests"
 "${PSQL[@]}" -f supabase/tests/rls.test.sql
 
+echo "==> Phone and Google account tests"
+"${PSQL[@]}" -f supabase/tests/auth_phone.test.sql
+
 echo "==> Orders, points and counter tests"
 "${PSQL[@]}" -f supabase/tests/orders_loyalty.test.sql

@@ -77,8 +77,11 @@
     "errors": {
       "phone": "Invalid phone number",
       "send": "Could not send the code, try again",
-      "code": "Wrong or expired code"
-    }
+      "code": "Wrong or expired code",
+      "google": "Could not sign you in with Google, try again"
+    },
+    "google": "Sign in with Google",
+    "or": "or"
   },
   "admin": {
     "title": "Admin panel",
@@ -316,5 +319,30 @@
     "redeemAction": "Redeem",
     "added": "{points} points added",
     "redeemed": "{amount} EGP off applied"
+  },
+  "account": {
+    "title": "My account",
+    "guest": "Guest",
+    "none": "Not connected",
+    "connected": "Connected",
+    "phoneLabel": "Phone",
+    "googleLabel": "Google",
+    "phoneSaved": "Phone verified and saved",
+    "addPhone": "Add a phone number",
+    "addPhoneHint": "So you can also sign in with your phone, and use your points at the branch with your number.",
+    "phonePlaceholder": "01012345678",
+    "sendCode": "Send code",
+    "codeSentTo": "Code sent to {phone}",
+    "verify": "Verify",
+    "linkGoogle": "Connect Google",
+    "linkGoogleHint": "So you can sign in with email to the same account without losing your points.",
+    "linkGoogleAction": "Connect Google",
+    "back": "Back to orders",
+    "errors": {
+      "phone": "Invalid phone number",
+      "send": "Could not send the code, try again",
+      "code": "Wrong or expired code",
+      "link": "Could not connect Google right now"
+    }
   }
 }
