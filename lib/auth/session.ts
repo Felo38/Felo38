@@ -3,9 +3,9 @@ import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 
 export const profileSchema = z.object({
-  id: z.uuid(),
+  id: z.guid(),
   role: z.enum(['customer', 'branch_staff', 'admin']),
-  branch_id: z.uuid().nullable(),
+  branch_id: z.guid().nullable(),
   phone: z.string().nullable(),
   full_name: z.string().nullable(),
   locale: z.enum(['ar', 'en']),

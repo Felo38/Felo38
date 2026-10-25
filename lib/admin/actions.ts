@@ -19,8 +19,8 @@ const optionalNumber = <T extends z.ZodNumber>(schema: T) =>
   z.preprocess((v) => (v === null || v === "" ? null : Number(v)), schema.nullable())
 
 const productSchema = z.object({
-  id: z.uuid().optional(),
-  category_id: z.uuid(),
+  id: z.guid().optional(),
+  category_id: z.guid(),
   slug: z.string().regex(/^[a-z0-9-]+$/, 'slug'),
   name_ar: z.string().min(1),
   name_en: z.string().min(1),
@@ -64,7 +64,7 @@ export async function saveProductAction(formData: FormData) {
 }
 
 const branchSchema = z.object({
-  id: z.uuid().optional(),
+  id: z.guid().optional(),
   slug: z.string().regex(/^[a-z0-9-]+$/, 'slug'),
   name_ar: z.string().min(1),
   name_en: z.string().min(1),

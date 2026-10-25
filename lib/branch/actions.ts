@@ -34,7 +34,7 @@ export async function transitionOrderAction(formData: FormData) {
   const back = String(formData.get('back') ?? `/${locale}/branch`)
   await staffOrRedirect(locale)
 
-  const orderId = z.uuid().safeParse(formData.get('order_id'))
+  const orderId = z.guid().safeParse(formData.get('order_id'))
   const to = z.enum(['accepted', 'preparing', 'ready', 'picked_up', 'rejected', 'rescheduled']).safeParse(formData.get('to'))
   if (!orderId.success || !to.success) redirect(`${back}?error=input`)
 
@@ -71,8 +71,8 @@ export async function setStockAction(formData: FormData) {
   const back = String(formData.get('back') ?? `/${locale}/branch`)
   const profile = await staffOrRedirect(locale)
 
-  const productId = z.uuid().safeParse(formData.get('product_id'))
-  const branchId = profile.branch_id ?? z.uuid().safeParse(formData.get('branch_id')).data
+  const productId = z.guid().safeParse(formData.get('product_id'))
+  const branchId = profile.branch_id ?? z.guid().safeParse(formData.get('branch_id')).data
   if (!productId.success || !branchId) redirect(`${back}?error=input`)
 
   const supabase = await createClient()
@@ -99,7 +99,7 @@ export async function addReceiptAction(formData: FormData) {
   const back = `/${locale}/branch/points`
 
   const parsed = z.object({
-    customer_id: z.uuid(),
+    customer_id: z.guid(),
     branch: z.string().regex(SLUG),
     receipt_no: z.string().trim().min(1).max(40),
     coffee: z.coerce.number().min(0).max(100000),
@@ -134,7 +134,7 @@ export async function counterRedeemAction(formData: FormData) {
   await staffOrRedirect(locale)
   const back = `/${locale}/branch/points`
 
-  const customer = z.uuid().safeParse(formData.get('customer_id'))
+  const customer = z.guid().safeParse(formData.get('customer_id'))
   const branch = z.string().regex(SLUG).safeParse(formData.get('branch'))
   const points = z.coerce.number().int().positive().safeParse(formData.get('points'))
   if (!customer.success || !branch.success || !points.success) redirect(`${back}?error=input`)

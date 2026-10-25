@@ -9,7 +9,7 @@ const localeSchema = z.enum(['ar', 'en']).catch('ar')
 const LOCAL_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/
 
 const lineSchema = z.array(
-  z.object({ productId: z.uuid(), quantity: z.number().int().min(1).max(20) }),
+  z.object({ productId: z.guid(), quantity: z.number().int().min(1).max(20) }),
 ).min(1).max(50)
 
 // Customer places an order. Prices and totals are computed in the database, not taken from the form.
@@ -46,7 +46,7 @@ export async function placeOrderAction(formData: FormData) {
 
 export async function cancelOrderAction(formData: FormData) {
   const locale = localeSchema.parse(formData.get('locale'))
-  const orderId = z.uuid().safeParse(formData.get('order_id'))
+  const orderId = z.guid().safeParse(formData.get('order_id'))
   if (!orderId.success) redirect(`/${locale}/orders`)
 
   const supabase = await createClient()
