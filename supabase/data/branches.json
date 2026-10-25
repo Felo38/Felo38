@@ -1,15 +1,4 @@
-export interface Branch {
-  id: string
-  name: string
-  address: string
-  addressEn: string
-  mapsUrl: string
-  // Filled in once coordinates are known. Branches without them are skipped by "nearest".
-  lat: number | null
-  lng: number | null
-}
-
-export const branches: Branch[] = [
+[
   {
     "id": "otr-cornich",
     "name": "Cornich",

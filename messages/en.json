@@ -1,0 +1,46 @@
+{
+  "common": {
+    "appName": "On the Run",
+    "signOut": "Sign out",
+    "home": "Home"
+  },
+  "home": {
+    "title": "Welcome to On the Run",
+    "subtitle": "Menu, ordering and points are coming in the next phases.",
+    "customerLogin": "Customer sign in",
+    "staffLogin": "Branch & admin sign in"
+  },
+  "login": {
+    "title": "Sign in with your phone",
+    "phoneLabel": "Phone number",
+    "phoneHint": "Example: 01012345678",
+    "sendCode": "Send code",
+    "codeLabel": "Verification code",
+    "codeHint": "6-digit code",
+    "verify": "Verify",
+    "codeSentTo": "Code sent to {phone}",
+    "changePhone": "Change number",
+    "errors": {
+      "phone": "Invalid phone number",
+      "send": "Could not send the code, try again",
+      "code": "Wrong or expired code"
+    }
+  },
+  "staff": {
+    "title": "Branch & admin sign in",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "errors": {
+      "invalid": "Invalid credentials"
+    }
+  },
+  "admin": {
+    "title": "Admin panel",
+    "comingSoon": "Being built in phase 2"
+  },
+  "branch": {
+    "title": "Branch dashboard",
+    "comingSoon": "Being built in phase 4"
+  }
+}

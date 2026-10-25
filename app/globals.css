@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+  /* Placeholder brand tokens. Replace with the real palette and logo. */
+  --color-brand: #1f2a44;
+  --color-brand-accent: #f5d04a;
+  --font-sans: system-ui, "Segoe UI", "Noto Sans Arabic", Tahoma, sans-serif;
+}
