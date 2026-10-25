@@ -134,3 +134,32 @@ supabase/tests/       اختبارات RLS والـ ledger
 - **انتهاء صلاحية النقاط** (`expiry_days`) متخزنة في الإعدادات لكن مش بتتطبق لسه.
 - **ساعات العمل** ما بتمنعش الطلب في الـ database لسه (الإدارة بتقفل الطلبات بـ `accepting_orders`).
 - **الكوبونات** مش متعملة.
+
+## تشغيل كامل على جهازك (بدون Supabase حقيقي)
+
+للتجربة بس. الـ backend المحلي (`dev/local-backend`) بيحاكي Supabase API على Postgres حقيقي، وفيه الـ migrations والـ RLS والـ functions كاملة. **مش للإنتاج.**
+
+1. Postgres 16 (أسهل طريقة بـ Docker):
+   ```bash
+   docker run -d --name otr-pg -p 54322:5432 -e POSTGRES_PASSWORD=postgres postgres:16
+   ```
+2. `npm install`
+3. بناء الداتا (migrations + بيانات تجريبية): `npm run dev:db`
+4. في terminal: `npm run dev:backend` (بيشتغل على `localhost:54400`)
+5. في `.env.local`:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=http://localhost:54400
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=local-anon
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+   ```
+   وبعدين `npm run dev` وافتح `http://localhost:3000/ar`.
+
+**الدخول التجريبي:**
+- أدمن: `/ar/staff/login` بالإيميل `admin@ontherun.test` وكلمة السر `demo1234`
+- فرع (كورنيش): نفس الصفحة بالإيميل `staff.cornich@ontherun.test`
+- عميل: `/ar/login` برقم `01000000001` وكود `123456`
+
+**ملاحظات:**
+- تسجيل الدخول بجوجل والـ SMS الحقيقي محتاجين Supabase حقيقي.
+- الـ Realtime مش موجود في الـ backend المحلي، فداشبورد الفرع بيتحدث كل 10 ثواني.
+- بعد ما تعمل `npm run dev:db`، كل البيانات بتترجع للحالة التجريبية.

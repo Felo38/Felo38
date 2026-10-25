@@ -23,6 +23,13 @@ export function LiveRefresh({
     soundRef.current = soundOn
   }, [soundOn])
 
+  // Fallback when Realtime is not connected (for example, a local backend): refresh every 10 seconds.
+  useEffect(() => {
+    if (live) return
+    const id = setInterval(() => router.refresh(), 10000)
+    return () => clearInterval(id)
+  }, [live, router])
+
   useEffect(() => {
     const supabase = createBrowserSupabase()
     const channel = supabase
